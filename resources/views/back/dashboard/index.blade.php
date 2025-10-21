@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.back')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ config('app.name') }} CMS</title>
-</head>
-
-<body>
-
-
-
-</body>
-
-</html>
+@section('content')
+    <main class="container bg-white py-3 my-3 shadow-sm rounded-2">
+        <div class="row">
+            <div class="col">
+                <h1>Bye</h1>
+            </div>
+        </div>
+    </main>
+@endsection
