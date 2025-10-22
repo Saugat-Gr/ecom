@@ -11,7 +11,9 @@
 
 <body>
 
-    @include('back.includes.nav')
+    @auth('cms')
+        @include('back.includes.nav')
+    @endauth
     @yield('content')
 
     <script src="{{ asset('js/back.js') }}"></script>

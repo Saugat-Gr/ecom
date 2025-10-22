@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Back\DashBoardController;
+use App\Http\Controllers\Back\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,8 @@ Route::get(
     'cms/dashboard',
     [DashBoardController::class, 'index']
 );
+
+Route::get('cms/login', [LoginController::class, 'show'])->middleware('auth:cms');
+Route::post('cms/login', [LoginController::class, 'login']);
 
 Route::redirect('/', 'cms/dashboard');

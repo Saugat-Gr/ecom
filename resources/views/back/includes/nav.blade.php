@@ -9,7 +9,6 @@
              </button>
          </div>
          <div class="d-flex justify-content-around" id="navbarNav">
-             @auth
                  <div class="dropdown bg-transparent">
                      <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
                          aria-expanded="false">
@@ -22,6 +21,5 @@
                      </ul>
                  </div>
              </div>
-         @endauth
      </div>
  </nav>
