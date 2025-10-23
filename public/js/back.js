@@ -7521,7 +7521,27 @@ __webpack_require__.r(__webpack_exports__);
   \*************************************/
 /***/ (() => {
 
+// Call this before reload
+function showToastAndReload(message) {
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "success";
+  localStorage.setItem("toast", JSON.stringify({
+    message: message,
+    type: type
+  }));
+  location.reload();
+}
 
+// Then, after reload
+document.addEventListener("DOMContentLoaded", function () {
+  var toastData = localStorage.getItem("toast");
+  if (toastData) {
+    var _JSON$parse = JSON.parse(toastData),
+      message = _JSON$parse.message,
+      type = _JSON$parse.type;
+    showToast(message, type);
+    localStorage.removeItem("toast");
+  }
+});
 
 /***/ }),
 

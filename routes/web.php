@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::get(
     'cms/dashboard',
     [DashBoardController::class, 'index']
-);
+)->name('back.dashboard.index');
 
-Route::get('cms/login', [LoginController::class, 'show'])->middleware('auth:cms');
-Route::post('cms/login', [LoginController::class, 'login']);
+Route::get('cms/login', [LoginController::class, 'showLoginForm'])->name('back.login.show');
+Route::post('cms/login', [LoginController::class, 'login'])->name('back.login');
 
 Route::redirect('/', 'cms/dashboard');
