@@ -10,6 +10,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    {{-- Toastr CSS --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+    {{-- Toastr JS --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
 </head>
 
 <body>
@@ -19,23 +26,24 @@
     @endauth
     @yield('content')
 
-    <div class="position-fixed bottom-0 start-0 p-3" style="z-index: 9999;">
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <div class="toast align-items-center text-bg-danger border-0 mb-2" role="alert" aria-live="assertive"
-                    aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            {{ $error }}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                            aria-label="Close"></button>
-                    </div>
-                </div>
-            @endforeach
+    @include('back.includes.message')
+    @foreach (session('flash_notification', collect())->toArray() as $message)
+        @if ($message['overlay'])
+            @include('flash::modal', [
+                'modalClass' => 'flash-modal',
+                'title' => $message['title'],
+                'body' => $message['message'],
+            ])
+        @else
+            <div class="alert alert-{{ $message['level'] }}">
+                {!! $message['message'] !!}
+            </div>
         @endif
-    </div>
+    @endforeach
 
+    {{ session()->forget('flash_notification') }}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/back.js') }}"></script>
 </body>
 

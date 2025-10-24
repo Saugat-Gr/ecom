@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Back\DashBoardController;
 use App\Http\Controllers\Back\LoginController;
+use App\Http\Controllers\Back\PasswordController;
+use App\Http\Controllers\Back\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,13 +18,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::group(['prefix' => 'cms', 'middleware' => 'auth:cms', 'as' => 'back.'], function () {
 
-Route::get(
-    'cms/dashboard',
-    [DashBoardController::class, 'index']
-)->name('back.dashboard.index');
+    Route::get(
+        'dashboard',
+        [DashBoardController::class, 'index']
+    )->name('dashboard.index');
 
-Route::get('cms/login', [LoginController::class, 'showLoginForm'])->name('back.login.show');
-Route::post('cms/login', [LoginController::class, 'login'])->name('back.login');
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login.show');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::controller(PasswordController::class)->group(function () {
+        Route::get('password', 'edit')->name('password.edit');
+        Route::put('password', 'update')->name('password.update');
+    });
+});
+
+
 
 Route::redirect('/', 'cms/dashboard');

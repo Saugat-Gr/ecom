@@ -7,12 +7,36 @@ use Illuminate\Http\Request;
 
 class Authenticate extends Middleware
 {
+
+    private $guards;
+
+    private $guard;
+
+    public function handle($request, \Closure $next, ...$guards)
+    {
+        $this->guards = $guards;
+        $this->authenticate($request, $guards);
+        return $next($request);
+    }
+
+
+
+
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      */
     protected function redirectTo(Request $request): ?string
     {
-         
-        return $request->expectsJson() ? null : route('login');
+
+        if ($request->expectsJson()) {
+            return null;
+        } else {
+
+            if (in_array('cms', $this->guards)) {
+                return route('back.login');
+            } else {
+                return route('login');
+            }
+        }
     }
 }
